@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        /* Add your custom styles for the products page here */
+        .products-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style for Add New Product Form */
+        #addProductForm {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        #addProductForm label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        #addProductForm input,
+        #addProductForm textarea,
+        #addProductForm select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #addProductForm button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #addProductForm button:hover {
+            background-color: #45a049;
+        }
+
+        /* Add space between Add New Product and the table title */
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Add your custom styles for modals */
+        .modal-header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .modal-body {
+            margin-top: 20px;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .modal-buttons button {
+            margin: 0 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal-buttons .confirm-button {
+            background-color: #d9534f; /* Bootstrap's danger color */
+            color: #fff;
+        }
+
+        .modal-buttons .cancel-button {
+            background-color: #5bc0de; /* Bootstrap's info color */
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Products Page Section -->
+    <section class="products-container">
+        <h2>Product Management</h2>
+
+        <!-- Product List Section -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Details</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr id="product-{{ product.id }}">
+                        <td>{{ product.name }}</td>
+                        <td>KES {{ product.price }}</td>
+                        <td>{{ product.details }}</td>
+                        <td>
+                            {% if product.image %}
+                                <img src="{{ product.image }}" alt="{{ product.name }}" style="max-width: 100px;">
+                            {% else %}
+                                No image
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main.edit_product', product_id=product.id) }}">Edit</a>
+                            <button onclick="openDeleteProductModal('{{ product.id }}')">Delete</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Add New Product Form -->
+        <h3>Add New Product</h3>
+        <form id="addProductForm" method="POST" enctype="multipart/form-data" action="{{ url_for('main.add_product') }}">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            <label for="productName">Name:</label>
+            {{ form.name(class="form-control", id="productName") }}
+
+            <label for="productPrice">Price:</label>
+            {{ form.price(class="form-control", id="productPrice") }}
+
+            <label for="productDetails">Details:</label>
+            {{ form.details(class="form-control", id="productDetails") }}
+
+            <label for="productImage">Image Upload:</label>
+            {{ form.image(class="form-control", id="productImage") }}
+
+            <button type="submit">Add Product</button>
+        </form>
+    </section>
+
+    <!-- Edit Product Modal -->
+    <div id="editProductModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editProductModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Edit Product</h2>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm" method="POST" enctype="multipart/form-data">
+                    <!-- ... (your form content) ... -->
+                    <div class="modal-buttons">
+                        <button type="button" onclick="updateProduct()">Update Product</button>
+                        <button type="button" onclick="closeModal('editProductModal')" class="cancel-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Product Modal -->
+    <div id="deleteProductModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('deleteProductModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Delete Product</h2>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this product?</p>
+                <div class="modal-buttons">
+                    <form method="POST" action="{{ url_for('main.delete_product', product_id=0) }}" id="deleteProductForm">
+                        {{ form.hidden_tag() }}
+                        {{ form.csrf_token }}
+                        <button type="submit" class="confirm-button">Delete</button>
+                        <button type="button" onclick="closeModal('deleteProductModal')" class="cancel-button">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function addProduct() {
+            console.log('Button clicked!');
+            var productName = document.getElementById('productName').value;
+            var productPrice = document.getElementById('productPrice').value;
+            var productDetails = document.getElementById('productDetails').value;
+            var productImageInput = document.getElementById('productImage');
+            var productImage = productImageInput.files[0];  // Use files array for file input
+        
+            // Get CSRF token from the form
+            var csrfToken = document.getElementById('csrf_token').value;
+        
+            // Perform validation
+            if (!productName || !productPrice || !productDetails || !productImage) {
+                alert('Please fill in all fields and upload an image');
+                return;
+            }
+        
+            // Validate price format
+            if (isNaN(parseFloat(productPrice)) || !isFinite(productPrice) || parseFloat(productPrice) <= 0) {
+                alert('Please enter a valid positive price');
+                return;
+            }
+        
+            // Create FormData object for sending files
+            var formData = new FormData();
+            formData.append('name', productName);
+            formData.append('price', productPrice);
+            formData.append('details', productDetails);
+            formData.append('image', productImage);
+            formData.append('csrf_token', csrfToken);  // Append CSRF token
+        
+            // Fetch product details from the server (replace with your actual API endpoint)
+            fetch('/api/products', {
+                method: 'POST',
+                body: formData  // Use FormData for file uploads
+            })
+            .then(response => response.json())
+            .then(product => {
+                // Add the new product to the table
+                var table = document.querySelector('table tbody');
+                var newRow = table.insertRow(table.rows.length);
+        
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+                var cell5 = newRow.insertCell(4);
+        
+                cell1.textContent = product.name;
+                cell2.textContent = new Intl.NumberFormat('en-KES', { style: 'currency', currency: 'KES' }).format(product.price);
+                cell3.textContent = product.details;
+        
+                // Display image or "No image" if not provided
+                cell4.innerHTML = product.image
+                    ? '<img src="' + product.image + '" alt="' + product.name + '" style="max-width: 100px;">'
+                    : 'No image';
+        
+                // Clear the form fields
+                document.getElementById('addProductForm').reset();
+        
+                // Close the Add New Product form
+                closeAddProductForm();
+        
+                alert('Product added successfully');
+            })
+            .catch(error => {
+                console.error('Error adding product:', error);
+                alert('Error adding product. Please try again.');
+            });
+        }
+    
+        function closeAddProductForm() {
+            // Close the Add New Product form
+            document.getElementById('addProductForm').style.display = 'none';
+        }
+        // Function to open the edit product modal
+        function openEditProductModal(productId) {
+            // Fetch product details from the server and populate the form (replace with your actual API endpoint)
+            fetch(`/api/products/${productId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(product => {
+                    // Populate the edit form with product details
+                    document.getElementById('editProductForm').elements['name'].value = product.name;
+                    document.getElementById('editProductForm').elements['price'].value = product.price;
+                    document.getElementById('editProductForm').elements['details'].value = product.details;
+        
+                    // Display the edit product modal
+                    document.getElementById('editProductModal').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching product details:', error);
+                    alert('Error fetching product details. Please try again.');
+                });
+        }
+
+        // Function to open the delete product modal
+        function openDeleteProductModal(productId) {
+            // Set the product ID in the delete confirmation form
+            document.getElementById('deleteProductForm').action = '/delete_product/' + productId;
+
+            // Display the delete product modal
+            document.getElementById('deleteProductModal').style.display = 'block';
+        }
+
+        // Function to close a modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    </script>
+</section>
+</body>
+{% endblock %}

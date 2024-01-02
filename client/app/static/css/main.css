@@ -1,0 +1,218 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-image: url("/static/images/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Added */
+  }
+ 
+ nav {
+     background-color: #343a40; /* Darker background color */
+     padding: 15px; /* Add padding for better spacing */
+     display: flex;
+     justify-content: space-between; /* Align items horizontally with space in between */
+     align-items: center; /* Align items vertically at the center */
+ }
+ 
+ .navbar-brand img {
+     border-radius: 50%; /* Make the logo image circular */
+ }
+ 
+ .navbar-toggler {
+     border: none; /* Remove border from the toggle button */
+ }
+ 
+ .navbar-toggler-icon {
+     background-color: #ffffff; /* Set color for the toggle icon */
+ }
+ 
+ .navbar-nav {
+     display: flex; /* Make the navigation items flex container */
+ }
+ 
+ .navbar-nav .nav-item {
+     margin-right: 15px; /* Add spacing between navigation items */
+ }
+ 
+ .nav-link {
+     color: #ffffff; /* Set text color for navigation links */
+ }
+ 
+ .nav-link:hover {
+     color: #e91e63; /* Change text color on hover */
+ }
+ 
+ .top-section {
+    padding: 50px 0; /* Adjust the padding as needed */
+ }
+ 
+ .top-section h2 {
+    text-align: center;
+    color: #e20b0b; /* Set text color for the heading */
+ }
+ 
+ .top-section p {
+    text-align: center;
+    color: #070101; /* Set text color for the paragraph */
+ }
+ 
+ /* Carousel styling */
+ .photo-slider {
+    margin-top: 30px; /* Add margin at the top */
+ }
+ 
+ .carousel-inner img {
+    width: 100%;
+    height: auto;
+ }
+ 
+ /* Media query for responsiveness */
+ @media (max-width: 768px) {
+    .top-section {
+        padding: 30px 0; /* Adjust the padding for smaller screens */
+    }
+ 
+    .photo-slider {
+        margin-top: 20px; /* Adjust the margin for smaller screens */
+    }
+ }
+    
+ 
+ 
+ 
+  
+  .footer {
+    background-color: #24262b;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+  }
+  
+  .block {
+    max-width: 1170px;
+    background-color: #24262b /* Updated background-color */
+    margin: auto;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .footer-col {
+    width: 25%;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-col h4 {
+    font-size: 18px;
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-bottom: 30px;
+    font-weight: 500;
+    display: inline-block;
+    position: relative;
+  }
+  
+  .footer-col h4::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    background-color: #e91e63;
+    height: 2px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  .footer-col h4 img {
+    max-width: 40px;
+    margin-right: 10px;
+  }
+  
+  .footer-col ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .footer-col ul li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-col ul li a {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 300;
+    color: #bbbbbb;
+  }
+  
+  .footer-col ul li a:hover {
+    color: #ffffff;
+    padding-left: 10px;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .social-links a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-right: 10px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  .social-links a:hover {
+    color: #e91e63;
+    background-color: #ffffff;
+  }
+  
+  .container .text-muted {
+    color: #ffffff; /* Set text color to white */
+ }
+ 
+  .footer p {
+    color: white;
+  }
+  
+  /*@media responsiveness*/
+  @media (max-width: 762px) {
+    .footer-col {
+      width: 50%;
+      margin-bottom: 30px;
+    }
+  }
+  
+  @media (max-width: 574px) {
+    .footer-col {
+      width: 100%;
+    }
+  }

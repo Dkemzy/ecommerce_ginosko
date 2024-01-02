@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        /* Add your custom styles for the admin dashboard here */
+        .dashboard {
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card {
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- Admin Dashboard Section -->
+        <section class="dashboard">
+            <h2>Admin Dashboard</h2>
+
+            <!-- Section 1: Overview -->
+            <div class="section">
+                <h3 class="section-header">Overview</h3>
+                <div class="cards">
+                    <div class="card">
+                        <!-- Add content for the first card -->
+                        <p>Card 1 Content</p>
+                    </div>
+                    <div class="card">
+                        <!-- Add content for the second card -->
+                        <p>Card 2 Content</p>
+                    </div>
+                    <!-- Add more cards as needed -->
+                </div>
+            </div>
+
+            <!-- Section 2: Statistics -->
+            <div class="section">
+                <h3 class="section-header">Statistics</h3>
+                <div class="cards">
+                    <div class="card">
+                        <!-- Add content for the third card -->
+                        <p>Card 3 Content</p>
+                    </div>
+                    <div class="card">
+                        <!-- Add content for the fourth card -->
+                        <p>Card 4 Content</p>
+                    </div>
+                    <!-- Add more cards as needed -->
+                </div>
+            </div>
+
+            <!-- Add more sections as needed -->
+        </section>
+
+        <!-- Add any additional sections or content as needed -->
+    </body>
+{% endblock %}

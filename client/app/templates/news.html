@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        .article-card {
+            border: 1px solid #ddd; /* Add a border to the card */
+            border-radius: 8px; /* Optional: Add border-radius for rounded corners */
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow */
+        }
+
+        .article-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .article-summary {
+            margin-bottom: 10px;
+        }
+
+        .article-img {
+            max-width: 400px; /* Set the maximum width to 400px */
+            height: 200px; /* Set the height to 200px */
+            margin-bottom: 10px;
+        }
+
+        .read-more-btn {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- News Section -->
+        <section id="news-section">
+            <h2>Latest News</h2>
+
+            <!-- News Articles -->
+            {% for article in news_articles %}
+                <div class="article-card">
+                    <h3 class="article-title">{{ article.title }}</h3>
+                    {% if article.top_image %}
+                        <img class="article-img" src="{{ article.top_image }}" alt="Article Image">
+                    {% else %}
+                        <!-- Provide a placeholder image or alternative content -->
+                        <p>No image available</p>
+                    {% endif %}
+                    <p class="article-summary">{{ article.summary }}</p>
+                    <a href="{{ url_for('main.article_detail', article_id=article.id) }}" class="read-more-btn">Read More</a>
+                </div>
+            {% endfor %}
+        </section>
+
+        <!-- Add any additional sections or content as needed -->
+
+        <script>
+            // Your existing script for toggling content can remain unchanged
+            function toggleReadMore(element) {
+                var article = $(element).closest('.article-card');
+                article.find('.article-content').slideToggle();
+            }
+        </script>
+    </body>
+{% endblock %}

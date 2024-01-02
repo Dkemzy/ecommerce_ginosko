@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        #checkout-section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #order-summary {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #order-summary table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #order-summary th, #order-summary td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #order-summary th {
+            background-color: #f2f2f2;
+        }
+
+        #total-price {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 18px;
+        }
+
+        #checkout-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #checkout-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- Checkout Section -->
+        <section id="checkout-section">
+            <h2>Checkout</h2>
+
+            <!-- Order Summary -->
+            <div id="order-summary">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loop through items in the order -->
+                        {% for item in order.items %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>${{ item.total_price }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Total Price -->
+            <div id="total-price">
+                <p>Total Price: Ksh{{ order.total_price }}</p>
+            </div>
+
+            <!-- Checkout Button -->
+            <button id="checkout-btn" onclick="checkout()">Place Order</button>
+        </section>
+
+        <!-- Add any additional sections or content as needed -->
+
+        <script>
+            // Add any JavaScript logic related to the checkout page if needed
+            function checkout() {
+                // Redirect the user to the payment page
+                window.location.href = "/payment";  // Change "/payment" to the actual URL of your payment page
+            }
+        </script>
+    </body>
+{% endblock %}

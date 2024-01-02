@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        /* Add your custom styles for the support page here */
+
+        .support-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .support-section {
+            margin-bottom: 20px;
+        }
+
+        .faq-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .faq-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- Support Page Section -->
+        <section class="support-container">
+            <h2>Support Center</h2>
+
+            <!-- Frequently Asked Questions Section -->
+            <div class="support-section">
+                <h3>Frequently Asked Questions</h3>
+                <ul class="faq-list">
+                    <li class="faq-item">
+                        <h4>How do I reset my password?</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod magna non velit dignissim.</p>
+                    </li>
+                    <li class="faq-item">
+                        <h4>What payment methods do you accept?</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod magna non velit dignissim.</p>
+                    </li>
+                    <!-- Add more FAQ items as needed -->
+                </ul>
+            </div>
+
+            <!-- Contact Us Section -->
+            <div class="support-section">
+                <h3>Contact Us</h3>
+                <p>If you have further questions, feel free to reach out to our support team.</p>
+                <p>Email: support@example.com</p>
+                <p>Phone: +123 456 7890</p>
+            </div>
+        </section>
+    </body>
+{% endblock %}

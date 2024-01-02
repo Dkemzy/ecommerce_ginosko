@@ -1,0 +1,40 @@
+<!-- edit_user.html -->
+
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* Add any custom styles for the edit_user page if needed */
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container custom-container">
+    <div class="card">
+      <div class="card-body">
+        <h2>Edit User</h2>
+
+        <form method="POST" action="{{ url_for('main.edit_user', user_id=user.id) }}">
+            {{ form.hidden_tag() }}
+        
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                {{ form.username(class="form-control") }}
+            </div>
+        
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {{ form.email(class="form-control") }}
+            </div>
+        
+            <!-- Add more form fields as needed -->
+        
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Update User">
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* Custom styles for the User Management page */
+    .custom-container {
+      max-width: 800px; /* Adjust the max-width as needed */
+      margin: 50px auto; /* Center-align the container */
+    }
+
+    h2 {
+      color: #333;
+      text-align: center; /* Center-align the text */
+    }
+
+    .card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow to the card */
+    }
+
+    .card-body {
+      padding: 20px; /* Adjust padding as needed */
+    }
+
+    .table {
+      margin-top: 20px;
+    }
+
+    .table a {
+      color: #007bff; /* Set link color */
+      display: inline-block; /* Make links display as blocks */
+      text-align: center; /* Center-align the text */
+      width: 100%; /* Make links fill the entire width of the cell */
+      margin: 10px;
+    }
+
+    .table a:hover {
+      color: #0056b3; /* Set link color on hover */
+    }
+
+    .btn-primary,
+    .btn-danger,
+    .btn-info,
+    .btn-warning {
+      color: #fff; /* Text color */
+    }
+
+    .btn-primary:hover,
+    .btn-danger:hover,
+    .btn-info:hover,
+    .btn-warning:hover {
+      color: #fff; /* Text color on hover */
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container custom-container">
+    <div class="card">
+      <div class="card-body">
+        <h2>User Management</h2>
+
+        <table class="table table-bordered mt-3">
+          <thead class="thead-dark">
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Change Role</th> <!-- Added column header for role change -->
+              <th>Edit User</th> <!-- Added column header for editing user -->
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+              <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <!-- Add button or link for changing user role -->
+                  <a href="{{ url_for('main.change_user_role', user_id=user.id) }}" class="btn btn-info btn-sm">Role</a>
+                </td>
+                <td>
+                  <!-- Link to the edit_user route for each user -->
+                  <a href="{{ url_for('main.edit_user', user_id=user.id) }}" class="btn btn-warning btn-sm">Edit User</a>
+                </td>
+                <td>
+                    <a href="{{ url_for('main.delete_user', user_id=user.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <!-- Add other user management forms or buttons as needed -->
+      </div>
+    </div>
+  </div>
+{% endblock %}

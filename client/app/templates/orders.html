@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        .order {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .order-details {
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- Orders Section -->
+        <section id="orders-section">
+            <h2>Orders</h2>
+
+            <!-- Orders List -->
+            {% for order in orders %}
+                <div class="order">
+                    <h3>Order #{{ order.order_number }}</h3>
+                    <p>Customer: {{ order.customer_name }}</p>
+                    <p>Address: {{ order.customer_address }}</p> <!-- Add the customer's address -->
+                    <p>Total Price: Ksh{{ order.total_price }}</p>
+                    
+                    <!-- Order Details -->
+                    <div class="order-details">
+                        <h4>Order Details</h4>
+                        <ul>
+                            {% for item in order.items %}
+                                <li>{{ item.product_name }} - Quantity: {{ item.quantity }} - Price: ${{ item.price }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+
+        <!-- Add any additional sections or content as needed -->
+    </body>
+{% endblock %}

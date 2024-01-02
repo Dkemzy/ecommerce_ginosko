@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.quilljs.com/1.3.6/quill.snow.css"> <!-- Link to Quill's CSS file -->
+
+    <style>
+        /* Custom styles for the create_news page */
+        body {
+            background-color: #f8f9fa; /* Set a light background color */
+            font-family: 'Calibri', sans-serif; /* Set a font resembling Calibri */
+            margin: 0;
+            padding: 20px;
+        }
+
+        #create-news-section {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #17365d;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Use the correct ID for Quill initialization */
+        #news-content {
+            height: 300px; /* Set a fixed height for the Quill editor */
+        }
+
+        .ql-editor img {
+            max-width: 100%; /* Ensure images don't exceed the container width */
+            height: auto; /* Maintain aspect ratio */
+            border: 1px solid #ddd; /* Add a border around the image */
+            margin: 10px 0; /* Add some margin for better spacing */
+            display: block; /* Ensure images are displayed as block elements */
+        }
+
+        .ql-editor .image-caption {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .top-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- Create News Section -->
+        <section id="create-news-section">
+            <h2>Create News</h2>
+
+            <!-- News Form -->
+            <form action="/create_news" method="post" enctype="multipart/form-data">
+                
+                <!-- News Article Title -->
+                <label for="news-title">Title:</label>
+                <input type="text" id="news-title" name="news_title" required>
+
+                <!-- Top Image -->
+                <label for="top-image">Top Image:</label>
+                <input type="file" id="top-image" name="top_image" accept="image/*" class="top-image">
+            
+                <!-- News Article Summary -->
+                <label for="news-summary">Summary:</label>
+                <textarea id="news-summary" name="news_summary" required></textarea>
+            
+                <!-- News Article Content (Quill editor) -->
+                <label for="news-content">Content:</label>
+                <div id="news-content"></div>
+                <input type="hidden" name="news_content" required>
+
+                <!-- Image Attachment -->
+                <label for="image-upload">Attach Images:</label>
+                <input type="file" id="image-upload" name="image" accept="image/*" multiple>
+                <!-- Submit Button -->
+                <button type="submit">Submit News</button>
+            </form>
+        </section>
+
+        <!-- Add Quill.js library -->
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+        <!-- Initialize Quill editor -->
+        <script>
+            var quill = new Quill('#news-content', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        ['image', 'video'], // Include the 'image' and 'video' options in the toolbar
+                        ['bold', 'italic', 'underline', 'strike'], // Other basic options
+                        ['link', 'blockquote', 'code-block'],
+                        [{ 'header': 1 }, { 'header': 2 }], // Header options
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }], // List options
+                        [{ 'script': 'sub' }, { 'script': 'super' }], // Script options
+                        [{ 'indent': '-1' }, { 'indent': '+1' }], // Indentation options
+                        [{ 'direction': 'rtl' }], // Text direction option
+                        [{ 'size': ['small', false, 'large', 'huge'] }], // Size options
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // Header size options
+                        [{ 'color': [] }, { 'background': [] }], // Color options
+                        [{ 'font': [] }], // Font options
+                        [{ 'align': [] }], // Alignment options
+                    ]
+                },
+            });
+
+            quill.on('text-change', function () {
+                // Get all images in the editor
+                var images = document.querySelectorAll('.ql-editor img');
+                
+                // Loop through each image and set the width and height
+                images.forEach(function (image) {
+                    image.style.maxWidth = '600px';
+                    image.style.height = '400px';
+                });
+            });
+            
+            // Include the Quill content in the form submission
+            var form = document.querySelector('form');
+            form.onsubmit = function () {
+                // Get the Quill content using Quill's API
+                var quillContent = quill.root.innerHTML;
+                // Populate the hidden form field with the Quill content
+                document.querySelector('[name="news_content"]').value = quillContent;
+            };
+        </script>
+    </body>
+{% endblock %}

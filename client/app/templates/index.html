@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}"> <!-- Link to your CSS file -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Include jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.19/jquery.touchSwipe.min.js"></script> <!-- Include TouchSwipe library -->
+    <script src="{{ url_for('static', filename='js/swipe.js') }}"></script> <!-- Your swipe functionality script -->
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- First Section: Logo -->
+        <section id="logo-section">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Your CAS Software Logo">
+        </section>
+
+        <!-- Second Section: Product Items and Cart -->
+        <section id="product-section">
+            <h2>Selected Product Items</h2>
+            <!-- Product Cards -->
+            {% for product in products %}
+                <div class="product-card" id="{{ product.id }}">
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    <p>{{ product.name }}</p>
+                    <p>${{ product.price }}</p>
+                </div>
+            {% endfor %}
+
+            <!-- Cart -->
+            {% for product in products %}
+                <div class="cart" data-product-id="{{ product.id }}" data-product-price="{{ product.price }}">
+                    <div class="cart-item">
+                        <div class="product-info">
+                            <img src="{{ product.image }}" alt="{{ product.name }}">
+                            <p>{{ product.name }}</p>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity('{{ product.id }}', -1)">-</button>
+                            <span class="quantity" data-product-id="{{ product.id }}">1</span>
+                            <button class="quantity-btn" onclick="changeQuantity('{{ product.id }}', 1)">+</button>
+                        </div>
+                        <p class="total-price" data-product-id="{{ product.id }}">${{ product.price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <div id="checkout-section">
+                <button id="checkout-btn" onclick="checkout()">Checkout</button>
+            </div>
+        </section>
+
+        <!-- Third Section: Details with Embedded YouTube Video -->
+        <section id="details-section">
+            <h2>About Us:</h2>
+            <!-- Add details about your CAS software -->
+
+            <!-- Embedded YouTube Video -->
+            <div id="youtube-video">
+                <!-- Replace 'YOUR_YOUTUBE_VIDEO_ID' with the actual video ID -->
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <script>
+            function changeQuantity(productId, change) {
+                var quantityElement = Ksh(".quantity[data-product-id='" + productId + "']");
+                var currentQuantity = parseInt(quantityElement.text());
+                
+                // Ensure that the new quantity is a valid number
+                if (!isNaN(currentQuantity)) {
+                    var newQuantity = currentQuantity + change;
+        
+                    if (newQuantity >= 1) {
+                        quantityElement.text(newQuantity);
+                        updateTotalPrice(productId, newQuantity);
+                    }
+                }
+                // Handle the case where the current quantity is not a valid number
+                else {
+                    console.error("Invalid quantity:", quantityElement.text());
+                }
+            }
+
+            function updateTotalPrice(productId, quantity) {
+                // Retrieve the product price from the HTML and compute the total price
+                var productPrice = parseFloat($("[data-product-id='" + productId + "']").data("product-price"));
+                var totalPrice = quantity * productPrice;
+                $(".total-price[data-product-id='" + productId + "']").text("Ksh" + totalPrice.toFixed(2));
+            }
+
+            function checkout() {
+                // Add your logic for handling the checkout process
+                // This could include redirecting to a registration page and then to the basket
+                alert("Checkout clicked! Redirecting to registration page...");
+                // Replace the following line with the actual URL of your registration page
+                window.location.href = "/register";
+            }
+        </script>
+    </body>
+{% endblock %}

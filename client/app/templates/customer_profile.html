@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <!-- Include the base head content -->
+    {{ super() }}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #customer-profile-section {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Customer Profile Section -->
+    <section id="customer-profile-section">
+        <h2>Customer Profile</h2>
+
+        <!-- Profile Form -->
+        <form action="{{ url_for('main.customer_profile') }}" method="post">
+            {{ form.csrf_token }}
+            
+            <!-- Customer Name -->
+            <div class="form-group">
+                <label for="customer-name">Name:</label>
+                {{ form.customer_name(class="form-control", id="customer-name", required=true) }}
+            </div>
+
+            <!-- Customer Email -->
+            <div class="form-group">
+                <label for="customer-email">Email:</label>
+                {{ form.customer_email(class="form-control", id="customer-email", required=true) }}
+            </div>
+
+            <!-- Customer Location -->
+            <div class="form-group">
+                <label for="customer-location">Location:</label>
+                {{ form.customer_location(class="form-control", id="customer-location") }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Update Profile</button>
+        </form>
+    </section>
+    <!-- Add any additional sections or content as needed -->
+{% endblock %}

@@ -1,0 +1,19 @@
+<!-- confirm_delete_user.html -->
+
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <!-- Add any additional styles/scripts needed for the confirmation page -->
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h2>Confirm User Deletion</h2>
+    <p>Are you sure you want to delete the user {{ user.username }}?</p>
+    <form method="post" action="{{ url_for('main.delete_user', user_id=user.id) }}">
+      <button type="submit" class="btn btn-danger">Yes, delete user</button>
+      <a href="{{ url_for('main.manage_users') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

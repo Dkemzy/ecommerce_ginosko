@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* Custom styles for the Change User Role page */
+    .custom-container {
+      max-width: 400px; /* Adjust the max-width as needed */
+      margin: 50px auto; /* Center-align the container */
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow to the card */
+    }
+
+    .card-body {
+      background-color: #f8f9fa; /* Add a background shade to the card body */
+      padding: 20px; /* Adjust padding as needed */
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      color: #fff; /* Text color */
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+      color: #fff; /* Text color on hover */
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container custom-container">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="mb-4">Change User Role</h2>
+
+        <form method="POST" action="{{ url_for('main.change_user_role', user_id=user.id) }}">
+          {{ form.hidden_tag() }}  {# Include the CSRF token #}
+
+          <div class="form-group">
+            <label for="{{ form.role.id }}" class="form-control-label">User Role</label>
+            {{ form.role(class="form-control form-control-sm") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.submit(class="btn btn-primary btn-sm") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

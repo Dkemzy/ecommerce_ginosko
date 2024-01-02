@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        #payment-section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #payment-form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        #process-payment-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #process-payment-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- Payment Section -->
+        <section id="payment-section">
+            <h2>Secure Payment Processing</h2>
+
+            <!-- Payment Form -->
+            <form id="payment-form" action="/process_payment" method="post">
+                <!-- Card Details -->
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" name="card-number" required>
+
+                <label for="expiry-date">Expiry Date</label>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YYYY" required>
+
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" required>
+
+                <!-- Personal Information -->
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" required>
+
+                <!-- Payment Amount -->
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" name="amount" required>
+
+                <!-- Payment Method Selection (Radio buttons for different payment methods) -->
+                <label>Payment Method:</label>
+                <input type="radio" id="card" name="payment-method" value="card" checked>
+                <label for="card">Credit/Debit Card</label>
+                
+                <input type="radio" id="mpesa" name="payment-method" value="mpesa">
+                <label for="mpesa">M-Pesa</label>
+
+                <!-- Process Payment Button -->
+                <button id="process-payment-btn" type="submit">Process Payment</button>
+            </form>
+        </section>
+
+        <!-- Add any additional sections or content as needed -->
+    </body>
+{% endblock %}

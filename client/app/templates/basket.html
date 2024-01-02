@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        #basket-section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #basket-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .basket-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .basket-item:hover {
+            transform: scale(1.05);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .item-info {
+            padding: 10px;
+        }
+
+        p {
+            margin: 0;
+            color: #555;
+        }
+
+        #checkout-section {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        #checkout-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #checkout-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <body>
+        <!-- Basket Section -->
+        <section id="basket-section">
+            <h2>Your Basket</h2>
+            <!-- Display items in the basket -->
+            <div id="basket-items">
+                {% for item in basket %}
+                    <div class="basket-item">
+                        <img src="{{ item.image }}" alt="{{ item.name }}">
+                        <div class="item-info">
+                            <p>{{ item.name }}</p>
+                            <p>Quantity: {{ item.quantity }}</p>
+                            <p>Total Price: ${{ item.total_price }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Checkout Button -->
+            <div id="checkout-section">
+                <button id="checkout-btn" onclick="checkout()">Checkout</button>
+            </div>
+        </section>
+
+        <!-- Add any additional sections or content as needed -->
+
+        <script>
+            // Add any JavaScript logic related to the basket page if needed
+            function checkout() {
+                // Add your logic for handling the checkout process
+                // This could include redirecting to a checkout page or showing a modal
+                alert("Checkout clicked!");
+            }
+        </script>
+    </body>
+{% endblock %}

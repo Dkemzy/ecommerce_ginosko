@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <!-- Add any additional head content here if needed -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        /* Add your custom styles for the edit product page here */
+        .edit-product-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Style for Edit Product Form */
+        #editProductForm {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        #editProductForm label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        #editProductForm input,
+        #editProductForm textarea,
+        #editProductForm select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #editProductForm button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #editProductForm button:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Edit Product Page Section -->
+    <section class="edit-product-container">
+        <h2>Edit Product</h2>
+
+        <!-- Edit Product Form -->
+        <form id="editProductForm" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            <label for="productName">Name:</label>
+            {{ form.name(class="form-control", id="productName") }}
+
+            <label for="productPrice">Price:</label>
+            {{ form.price(class="form-control", id="productPrice") }}
+
+            <label for="productDetails">Details:</label>
+            {{ form.details(class="form-control", id="productDetails") }}
+
+            <label for="productImage">Image Upload:</label>
+            {{ form.image(class="form-control", id="productImage") }}
+
+            <button type="button" onclick="updateProduct()">Update Product</button>
+        </form>
+
+        <script>
+            function updateProduct() {
+                console.log('Update Product button clicked!');
+                // Add your logic for updating the product here
+            }
+        </script>
+    </section>
+{% endblock %}
